@@ -1,0 +1,415 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=effectScatter-bmap
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+</head>
+
+<body style="height: 100%; margin: 0">
+    <div id="container" style="height: 100%"></div>
+    <div id="container2" style="height: 50%"></div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+    <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+    <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script> -->
+    <!-- Uncomment this line if you want to use map
+        
+        -->
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=2.0&ak=34rvwCk1WfWqY7sSHDB4litUqaT65b31"></script>
+    <!-- Uncomment these two lines if you want to use bmap extension
+        -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+
+
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        var option;
+        $(document).ready(function () {
+            $.ajax({
+                url: "/myplugin", success: function (result) {
+                    console.log(result);
+                    var data = [];
+                    for (var i in result) {
+                        data.push({ name: result[i]['城市'], value: result[i]['确诊'] });
+                    }
+                    var geoCoordMap = {
+                        '西藏': [91.11, 29.97],
+                        '上海': [121.48, 31.22],
+                        '山东': [122.1, 37.5],
+                        '福建': [119.3, 26.08],
+                        '广西': [108.33, 22.84],
+                        '广东': [113.23, 23.16],
+                        '西安': [109.47, 36.6],
+                        '云南': [102.73, 25.04],
+                        '广东': [114.07, 22.62],
+                        '苏州': [120.62, 31.32],
+                        '江西': [115.89, 28.68],
+                        '海南': [109.511909, 18.252847],
+                        '吉林': [126.57, 43.87],
+                        '呼和浩特': [111.65, 40.82],
+                        '四川': [104.06, 30.67],
+                        '西安': [108.95, 34.27],
+                        '重庆': [106.54, 29.59],
+                        '台湾': [121.420757, 28.656386],
+                        '南京': [118.78, 32.04],
+                        '贵州': [106.71, 26.57],
+                        '北京': [116.46, 39.92],
+                        '新疆': [87.68, 43.77],
+                        '杭州': [120.19, 30.26],
+                        '鞍山': [122.85, 41.12],
+                        '河南': [114.35, 34.79],
+                        '济南': [117, 36.65],
+                        '温州': [120.65, 28.01],
+                        '临安': [119.72, 30.23],
+                        '甘肃': [103.73, 36.03],
+                        '天津': [117.2, 39.13],
+                        '黑龙江': [126.63, 45.75],
+                        '天津': [118.02, 39.63],
+                        '洛阳': [112.44, 34.7],
+                        '河北': [114.48, 38.03],
+                        '湖南': [113, 28.21],
+                        '安徽': [117.27, 31.86],
+                        '湖北': [114.31, 30.52],
+                    };
+
+                    var convertData = function (data) {
+                        var res = [];
+                        for (var i = 0; i < data.length; i++) {
+                            var geoCoord = geoCoordMap[data[i].name];
+                            if (geoCoord) {
+                                res.push({
+                                    name: data[i].name,
+                                    value: geoCoord.concat(data[i].value)
+                                });
+                            }
+                        }
+                        return res;
+                    };
+
+                    option = {
+                        title: {
+                            text: '2020年全国主要省份新冠疫情',
+                            subtext: 'COVID-19',
+                            sublink: 'http://www.pm25.in',
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{b}<br/>{c} 例'
+                        },
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            left: 'right',
+                            top: 'center',
+                            feature: {
+                                dataView: { readOnly: false },
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        brush: {
+                            //工具栏外观
+                            brushStyle: {
+                                borderWidth: 2,
+                                color: 'rgba(0,0,0,0.2)',
+                                borderColor: 'red',
+                            },
+                            //设定刷选类型,停止后刷选还是一定频率刷选
+                            throttleType: 'debounce',
+                            //停止多久后刷选
+                            throttleDelay: 300,
+                            //未被选择的区域外观
+                            outOfBrush: {
+
+                            }
+                        },
+                        visualMap: {
+                            min: 0,
+                            max: 36000,
+                            text: ['High', 'Low'],
+                            realtime: false,
+                            calculable: true,
+                            inRange: {
+                                color: ['lightskyblue', 'yellow', 'orangered']
+                            }
+                        },
+                        bmap: {
+                            center: [104.114129, 37.550339],
+                            zoom: 5,
+                            roam: true,
+                            mapStyle: {
+                                'styleJson': [
+                                    {
+                                        'featureType': 'water',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#031628'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'land',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#000102'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'highway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry.fill',
+                                        'stylers': {
+                                            'color': '#000000'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry.stroke',
+                                        'stylers': {
+                                            'color': '#0b3d51'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'local',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#000000'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'railway',
+                                        'elementType': 'geometry.fill',
+                                        'stylers': {
+                                            'color': '#000000'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'railway',
+                                        'elementType': 'geometry.stroke',
+                                        'stylers': {
+                                            'color': '#08304b'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'subway',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'lightness': -70
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'building',
+                                        'elementType': 'geometry.fill',
+                                        'stylers': {
+                                            'color': '#000000'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'all',
+                                        'elementType': 'labels.text.fill',
+                                        'stylers': {
+                                            'color': '#857f7f'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'all',
+                                        'elementType': 'labels.text.stroke',
+                                        'stylers': {
+                                            'color': '#000000'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'building',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#022338'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'green',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#062032'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'boundary',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#465b6c'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'manmade',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#022338'
+                                        }
+                                    },
+                                    {
+                                        'featureType': 'label',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'on'
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        series: [
+                            {
+                                name: '确诊人数',
+                                type: 'scatter',
+                                coordinateSystem: 'bmap',
+                                data: convertData(data),
+                                symbolSize: function (val) {
+                                    return Math.log(val[2]) * 10;
+                                },
+                                encode: {
+                                    value: 2
+                                },
+                                label: {
+                                    formatter: '{b}',
+                                    position: 'right',
+                                    show: true
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true
+                                    }
+                                }
+                            },
+
+                            // {
+                            //     name: 'Top 5',
+                            //     type: 'effectScatter',
+                            //     coordinateSystem: 'bmap',
+                            //     data: convertData(data.sort(function (a, b) {
+                            //         return b.value - a.value;
+                            //     }).slice(0, 6)),
+                            //     symbolSize: function (val) {
+                            //         return val[2] / 1000;
+                            //     },
+                            //     encode: {
+                            //         value: 2
+                            //     },
+                            //     showEffectOn: 'render',
+                            //     rippleEffect: {
+                            //         brushType: 'stroke'
+                            //     },
+                            //     hoverAnimation: true,
+                            //     label: {
+                            //         formatter: '{b}',
+                            //         position: 'right',
+                            //         show: true
+                            //     },
+                            //     itemStyle: {
+                            //         shadowBlur: 10,
+                            //         shadowColor: '#333'
+                            //     },
+                            //     zlevel: 1
+                            // }
+                        ]
+                    };
+
+                    if (option && typeof option === 'object') {
+                        myChart.setOption(option);
+                    }
+                }
+            });
+            $.ajax({
+                url: "/day_recover_data", success: function (result) {
+                    console.log(result);
+                    var data = [];
+                    for (var i in result) {
+                        data.push({ date: result[i]['日期'], value: result[i]['痊愈'] });
+                    }
+                    var dom = document.getElementById("container");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+
+                    var option;
+                    var convertData = function (data) {
+                        var res = [];
+                        date = []
+                        number = []
+                        for (var i = 0; i < data.length; i++) {
+                            date.push(data[i].date)
+                            number.push(data[i].value)
+                        }
+                        return {
+                            date: date,
+                            number: number
+                        };
+                    }
+                    var data = convertData(data)
+
+                    option = {
+                        title: {
+                            text: '全国每日痊愈人数波动情况',
+                            left: 'center',
+                            textStyle: {
+                                color: '#999',
+                                fontWeight: 'normal',
+                                fontSize: 40
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: data.date
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            data: data.number,
+                            type: 'line',
+                            symbol: 'triangle',
+                            symbolSize: 20,
+                            lineStyle: {
+                                color: '#5470C6',
+                                width: 4,
+                                type: 'dashed'
+                            },
+                            itemStyle: {
+                                borderWidth: 3,
+                                borderColor: '#EE6666',
+                                color: 'yellow'
+                            }
+                        }]
+                    };
+
+                    if (option && typeof option === 'object') {
+                        myChart.setOption(option);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -6,6 +6,7 @@
 | ---------- | ------ |
 | 1800300735 | 汪小龙 |
 | 1800300705 | 宁彩云 |
+| 1800301204 | 黄毓茹 |
 |            |        |
 |            |        |
 |            |        |
@@ -52,3 +53,18 @@ https://tianchi.aliyun.com/dataset/dataDetail?dataId=649
 | 用户数量     | 987,994     |
 | 商品类目数量 | 9,439       |
 | 所有行为数量 | 100,150,807 |
+
+# Requirements
+
+```shell
+pandas
+numpy
+scikit-learn
+pywebio
+```
+
+# Code structure description
+
+Download the user behavior dataset from [here](https://tianchi.aliyun.com/dataset/dataDetail?dataId=649), and then unzip it to `./dataset/`.
+
+`./src/` includes source code.
