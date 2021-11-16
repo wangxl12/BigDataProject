@@ -66,4 +66,53 @@ pywebio
 
 Download the user behavior dataset from [here](https://tianchi.aliyun.com/dataset/dataDetail?dataId=649), and then unzip it to `./dataset/`.
 
-`./src/` includes source code.
+`./src/` includes source code. We use Django to so visualization problems. The structure of our project is as below:
+|──BigDataProject
+|  |──dataset
+|  |  └──UserBehavior.csv
+|  |
+|  |──src
+|  |  |──`__pycache__`
+|  |  |   └──...
+|  |  |
+|  |  |──bigdata
+|  |  |  |──`__pycache__`
+|  |  |  |  └──...
+|  |  |  |
+|  |  |  |──migrations
+|  |  |  |  └──...
+|  |  |  |
+|  |  |  |──templates
+|  |  |  |  └──bigdata
+|  |  |  |      |──xxx.html
+|  |  |  |      └──index.js
+|  |  |  |
+|  |  |  |──`__init__.py`
+|  |  |  |──admin.py
+|  |  |  |──apps.py
+|  |  |  |──models.py
+|  |  |  |──tests.py
+|  |  |  |──urls.py
+|  |  |  └──views.py
+|  |  |  
+|  |  |──config
+|  |  |  |──`__pycache__`
+|  |  |  |  └──...
+|  |  |  |
+|  |  |  |──`__init__.py`
+|  |  |  |──asgi.py
+|  |  |  |──settings.py
+|  |  |  |──urls.py
+|  |  |  └──wsgi.py
+|  |  |  
+|  |  |──static
+|  |  |  └──...
+|  |  |  
+|  |  |──database_op.py
+|  |  |──dataset_analyze.py
+|  |  |──db.sqlite3
+|  |  └──manage.py
+|  |  
+|  |──notebook.ipynb
+|  |──README.md
+|  └──requirements.txt
