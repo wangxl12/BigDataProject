@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bigdata',  # 可以在app内创建templates
+    'bigdata.apps.BigdataConfig',  # 可以在app内创建templates
 ]
 
 MIDDLEWARE = [
