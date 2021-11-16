@@ -9,4 +9,4 @@ def brokenline(request):
     # there is no real data now, you can generate by yourself
     # 
     # extend your functions here
-    return render(request, 'bigdata/brokenline.html', locals())
+    return render(request, 'bigdata/index.html', locals())
