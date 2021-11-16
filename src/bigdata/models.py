@@ -24,3 +24,46 @@ class UserBehaviorTopN(models.Model):
     # fav behavior
     fav = models.CharField(max_length=100)
     
+class ProdClass(models.Model):
+    """统计每一类商品，对应四种用户行为的数量，
+    存放在数据库中的商品类别信息是按照总量从大到小排序的
+
+    Args:
+        models ([type]): [description]
+    """
+    # products class ID
+    prod_clss_id = models.CharField(max_length=20)
+
+    # pv behavior
+    pv = models.CharField(max_length=100)
+    
+    # buy behavior
+    buy = models.CharField(max_length=100)
+    
+    # cart behavior
+    cart = models.CharField(max_length=100)
+    
+    # fav behavior
+    fav = models.CharField(max_length=100)
+
+class ProdID(models.Model):
+    """统计每一件商品，对应四种用户行为的数量，
+    存放在数据库中的商品数量信息是按照总量从大到小排序的
+
+    Args:
+        models ([type]): [description]
+    """
+    # product ID
+    prod_id = models.CharField(max_length=20)
+
+    # pv behavior
+    pv = models.CharField(max_length=100)
+    
+    # buy behavior
+    buy = models.CharField(max_length=100)
+    
+    # cart behavior
+    cart = models.CharField(max_length=100)
+    
+    # fav behavior
+    fav = models.CharField(max_length=100)
