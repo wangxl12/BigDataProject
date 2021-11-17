@@ -15,13 +15,17 @@ class DataBaseOP():
             return
         self.table = table
     
-    def insert(self, attr, val):
+    def insert(self, attr, val, mode='insert'):
         assert isinstance(attr, str) and isinstance(val, str),\
             print('输入的属性和值必须是字符串!')
-            
+        assert mode == 'insert' or mode == 'test', print("mode is uncorrect!")
+
         sql = f'insert into {self.table} ({attr}) values({val})'
-        self.cur.execute(sql)
-        self.connect.commit()
+        if mode == 'test':
+            print(sql)
+        elif mode == 'insert':
+            self.cur.execute(sql)
+            self.connect.commit()
     
     def update(self, change, condition):
         assert isinstance(change, str) and isinstance(condition, str),\
@@ -47,6 +51,12 @@ class DataBaseOP():
         else:
             print(result.fetchall()[index])
     
+    def drop(self, table):
+        sql = f'drop table {table}'
+        self.cur.execute(sql)
+        self.connect.commit()
+        print(f'Dropped table {table}')
+
     def close(self):
         self.cur.close()
         self.connect.close()
