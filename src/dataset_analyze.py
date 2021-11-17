@@ -110,30 +110,62 @@ def productsID_statisctis(df, prods=1000):
                                 bahavior_count['fav']]])
     return result
 
-def who_buys_most(df, top_n=5):
-    """购买商品的用户排行
+def who_buys_most(df, top_n=1000):
+    """行为为buy的所有item中，排名前top_n个用户
 
     Args:
         df (pd.DataFrame): pd.DataFrame
-        top_n (int, optional): 返回前n个购买最多的用户. Defaults to 5.
+        top_n (int, optional): 排名前top_n, Defaults to 1000.
     """
-    assert isinstance(top_n, int) and top_n > 0 and top_n < 10, "top_n uncorrect!"
-    user_ids = list(df['用户ID'].value_counts()[: prod_clss].keys())
+    assert isinstance(top_n, int) and top_n > 0 and top_n < 10000, "top_n uncorrect!"
+    # 选出行为buy的所有item
+    buy_behavior = df.loc[df['行为类型'] == 'buy', : ]
+    # 按照用户ID进行统计并排序，返回用户ID
+    userid_num = buy_behavior['用户ID'].value_counts()[: top_n]
+    user_ids = list(userid_num.keys())
 
-def who_cart_most(df, top_n=5):
-    """加入购物车的用户排行
+    result = []
+    for user_id in tqdm(user_ids):
+        result.append(['buy', user_id, userid_num[user_id]])
+    
+    return result
+
+def who_cart_most(df, top_n=1000):
+    """行为为cart的所有item中，排名前top_n个用户
 
     Args:
         df (pd.DataFrame): pd.DataFrame
-        top_n (int, optional): 返回前n个加入购物车最多的用户. Defaults to 5.
+        top_n (int, optional): 排名前top_n, Defaults to 1000.
     """
-    assert isinstance(top_n, int) and top_n > 0 and top_n < 10, "top_n uncorrect!"
+    assert isinstance(top_n, int) and top_n > 0 and top_n < 10000, "top_n uncorrect!"
+    # 选出行为buy的所有item
+    cart_behavior = df.loc[df['行为类型'] == 'cart', : ]
+    # 按照用户ID进行统计并排序，返回用户ID
+    userid_num = cart_behavior['用户ID'].value_counts()[: top_n]
+    user_ids = list(userid_num.keys())
 
-def who_fav_most(df, top_n=5):
-    """收藏商品的用户排行
+    result = []
+    for user_id in tqdm(user_ids):
+        result.append(['cart', user_id, userid_num[user_id]])
+    
+    return result
+
+def who_fav_most(df, top_n=1000):
+    """行为为fav的所有item中，排名前top_n个用户
 
     Args:
         df (pd.DataFrame): pd.DataFrame
-        top_n (int, optional): 返回前n个收藏商品最多的用户. Defaults to 5.
+        top_n (int, optional): 排名前top_n, Defaults to 1000.
     """
-    assert isinstance(top_n, int) and top_n > 0 and top_n < 10, "top_n uncorrect!"
+    assert isinstance(top_n, int) and top_n > 0 and top_n < 10000, "top_n uncorrect!"
+    # 选出行为buy的所有item
+    fav_behavior = df.loc[df['行为类型'] == 'fav', : ]
+    # 按照用户ID进行统计并排序，返回用户ID
+    userid_num = fav_behavior['用户ID'].value_counts()[: top_n]
+    user_ids = list(userid_num.keys())
+
+    result = []
+    for user_id in tqdm(user_ids):
+        result.append(['fav', user_id, userid_num[user_id]])
+    
+    return result
