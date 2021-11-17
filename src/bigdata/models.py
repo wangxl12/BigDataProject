@@ -35,16 +35,16 @@ class ProdClass(models.Model):
     prod_clss_id = models.CharField(max_length=20)
 
     # pv behavior
-    pv = models.CharField(max_length=100)
+    pv = models.IntegerField()
     
     # buy behavior
-    buy = models.CharField(max_length=100)
+    buy = models.IntegerField()
     
     # cart behavior
-    cart = models.CharField(max_length=100)
+    cart = models.IntegerField()
     
     # fav behavior
-    fav = models.CharField(max_length=100)
+    fav = models.IntegerField()
 
 class ProdID(models.Model):
     """统计每一件商品，对应四种用户行为的数量，
@@ -57,13 +57,52 @@ class ProdID(models.Model):
     prod_id = models.CharField(max_length=20)
 
     # pv behavior
-    pv = models.CharField(max_length=100)
+    pv = models.IntegerField()
     
     # buy behavior
-    buy = models.CharField(max_length=100)
+    buy = models.IntegerField()
     
     # cart behavior
-    cart = models.CharField(max_length=100)
+    cart = models.IntegerField()
     
     # fav behavior
-    fav = models.CharField(max_length=100)
+    fav = models.IntegerField()
+
+class BuyMost(models.Model):
+    """
+    行为为buy的所有item中，排名前top_n个用户
+    """
+    # user behavior
+    behavior = models.CharField(max_length=5)
+
+    # user id
+    user_id = models.CharField(max_length=10)
+
+    # number
+    number = models.IntegerField()
+
+class FavMost(models.Model):
+    """
+    行为为fav的所有item中，排名前top_n个用户
+    """
+    # user behavior
+    behavior = models.CharField(max_length=5)
+
+    # user id
+    user_id = models.CharField(max_length=10)
+
+    # number
+    number = models.IntegerField()
+
+class CartMost(models.Model):
+    """
+    行为为cart的所有item中，排名前top_n个用户
+    """
+    # user behavior
+    behavior = models.CharField(max_length=5)
+
+    # user id
+    user_id = models.CharField(max_length=10)
+
+    # number
+    number = models.IntegerField()
