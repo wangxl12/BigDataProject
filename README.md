@@ -54,13 +54,17 @@ https://tianchi.aliyun.com/dataset/dataDetail?dataId=649
 | 商品类目数量 | 9,439       |
 | 所有行为数量 | 100,150,807 |
 
+# Start up
+Switch to `/BigDataProject/src/`, then run `python manage.py runserver 0.0.0.0:80` , finally you can see the visual results after inputting `127.0.0.0:80` to your browser. Just as below:
+![visual result](./imgs/Visual result.png)
+
 # Requirements
 
 ```shell
 pandas
 numpy
 scikit-learn
-pywebio
+django
 ```
 
 # Code structure description
