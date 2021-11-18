@@ -1,7 +1,7 @@
 import sqlite3
 
 class DataBaseOP():
-    def __init__(self, database='src/db.sqlite3') -> None:
+    def __init__(self, database='db.sqlite3') -> None:
         self.connect = sqlite3.connect(database)
         self.cur = self.connect.cursor()
         self.table = None
@@ -15,6 +15,16 @@ class DataBaseOP():
             return
         self.table = table
     
+    def get_table(self):
+        return self.table
+    
+    def select(self):
+        assert self.table is not None, print("Table is None! Select it first!")
+        sql = f'select * from {self.table}'
+        self.cur.execute(sql)
+        results = self.cur.fetchall()
+        return results
+        
     def insert(self, attr, val, mode='insert'):
         assert isinstance(attr, str) and isinstance(val, str),\
             print('输入的属性和值必须是字符串!')
