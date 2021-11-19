@@ -56,7 +56,8 @@ https://tianchi.aliyun.com/dataset/dataDetail?dataId=649
 
 # Start up
 Switch to `/BigDataProject/src/`, then run `python manage.py runserver 0.0.0.0:80` , finally you can see the visual results after inputting `127.0.0.0:80` to your browser. Just as below:
-![visual result](./imgs/Visual result.png)
+
+<img src="./imgs/Visual_result.png" alt="visual_result" style="zoom:50%;" />
 
 # Requirements
 
