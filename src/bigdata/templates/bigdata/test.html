@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>欢迎光临</title>
+    <style>
+        #big {
+            width: 900px;
+            padding-left: 240px;
+        }
+
+        #top {
+            height: 200px;
+            background-color: #00FFFF;
+        }
+
+        #center {
+            height: 600px;
+            width: 900px;
+            overflow: hidden;
+        }
+
+        #left {
+            float: left;
+            width: 200px;
+            height: 600px;
+            background-color: pink;
+        }
+
+        #right {
+            float: right;
+            width: 700px;
+            height: 600px;
+            background-color: yellow;
+        }
+
+        #foot {
+            height: 100px;
+            background-color: #00FFFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="big" style="text-align:center">
+        <div id="top">
+            <font size="7" color=#E800E8><b>
+                    书 香 小 屋</b></font><br />
+            <font size="4" color=#FF79BC>欢迎来到书香小屋！</font><br />
+            <form>
+                昵称：<input type="text" name="username" placeholder="请输入您的昵称"></input><br /><br />
+                密码：<input type="password" name="password"></input><br /><br />
+                <button name="login" value="登录">登录</button>
+                <button name="login" value="注册">注册</button>
+            </form>
+        </div>
+        <div id="center">
+            <div id="left">
+                <pre>
+                    <a href="#">小屋简介</a>
+
+                    <a href="#">经典藏书</a>
+    
+                    <a href="#">娱乐故事</a>
+         
+                    <a href="#">科技发现</a>	
+                  
+                    <a href="#">财经之道</a>
+                    
+                    <a href="#">谈天说地</a>
+                </pre>
+                <br /><br /><br /><br /><br />
+                <marquee direction=left scrolldelay=600 scrollamount=50>
+                    <font size="4" color=#FF2D2D>最 美 不
+                        过 初 相 见</font>
+                </marquee>
+            </div>
+            <div id="right">
+                <img src="danya.jpg" alt="唯美背景图">
+            </div>
+        </div>
+        <div id="foot" style="text-align:right">
+            <br /><br /><br />
+            <div id="blink">
+            <font size="6">感谢您的来访！</font>
+        </div>
+        <script language="javascript">
+            function changeColor() {
+                var color = "#f00|#0f0|#00f|#880|#808|#088|yellow|green|blue|gray";
+                color = color.split("|");
+                document.getElementById("blink").style.color = color[parseInt(Math.random() * color.length)];
+            }
+            setInterval("changeColor()", 200);
+        </script>
+            </font>
+    </div>
+</body>
+
+</html>
