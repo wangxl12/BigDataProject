@@ -5,7 +5,8 @@
 | 学号       | 姓名   |
 | ---------- | ------ |
 | 1800300735 | 汪小龙 |
-|            |        |
+| 1800300705 | 宁彩云 |
+| 1800301204 | 黄毓茹 |
 |            |        |
 |            |        |
 |            |        |
@@ -52,3 +53,74 @@ https://tianchi.aliyun.com/dataset/dataDetail?dataId=649
 | 用户数量     | 987,994     |
 | 商品类目数量 | 9,439       |
 | 所有行为数量 | 100,150,807 |
+
+# Start up
+Switch to `/BigDataProject/src/`, then run `python manage.py runserver 0.0.0.0:80` , finally you can see the visual results after inputting `127.0.0.0:80` to your browser. Just as below:
+
+<img src="./imgs/Visual_result.png" alt="visual_result" style="zoom:50%;" />
+
+# Requirements
+
+```shell
+pandas
+numpy
+scikit-learn
+django
+```
+
+# Code structure description
+
+Download the user behavior dataset from [here](https://tianchi.aliyun.com/dataset/dataDetail?dataId=649), and then unzip it to `./dataset/`.
+
+`./src/` includes source code. We use Django to so visualization problems. The structure of our project is as below:
+```shell
+|──BigDataProject
+|  |──dataset
+|  |  └──UserBehavior.csv
+|  |
+|  |──src
+|  |  |──`__pycache__`
+|  |  |   └──...
+|  |  |
+|  |  |──bigdata
+|  |  |  |──`__pycache__`
+|  |  |  |  └──...
+|  |  |  |
+|  |  |  |──migrations
+|  |  |  |  └──...
+|  |  |  |
+|  |  |  |──templates
+|  |  |  |  └──bigdata
+|  |  |  |      |──xxx.html
+|  |  |  |      └──index.js
+|  |  |  |
+|  |  |  |──`__init__.py`
+|  |  |  |──admin.py
+|  |  |  |──apps.py
+|  |  |  |──models.py
+|  |  |  |──tests.py
+|  |  |  |──urls.py
+|  |  |  └──views.py
+|  |  |  
+|  |  |──config
+|  |  |  |──`__pycache__`
+|  |  |  |  └──...
+|  |  |  |
+|  |  |  |──`__init__.py`
+|  |  |  |──asgi.py
+|  |  |  |──settings.py
+|  |  |  |──urls.py
+|  |  |  └──wsgi.py
+|  |  |  
+|  |  |──static
+|  |  |  └──...
+|  |  |  
+|  |  |──database_op.py
+|  |  |──dataset_analyze.py
+|  |  |──db.sqlite3
+|  |  └──manage.py
+|  |  
+|  |──notebook.ipynb
+|  |──README.md
+|  └──requirements.txt
+```
