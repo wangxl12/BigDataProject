@@ -120,25 +120,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
-
-# simpleui theme
-SIMPLEUI_DEFAULT_THEME = 'layui.css'
-SIMPLEUI_HOME_INFO = True
-SIMPLEUI_HOME_QUICK = False
-SIMPLEUI_DEFAULT_ICON = True
-SIMPLEUI_ICON = {
-    # '单选题': 'fab fa-apple',
-    # '单选题': 'fas fa-code',
-    # '多选题': "fa fa-book",
-    # "填空题": "fa fa-paint-brush",
-    # "班级学生": "fa fa-users",
-    # "成绩": "fa fa-graduation-cap",
-    # "试卷": "fa fa-tasks",
-}
-SIMPLEUI_LOGO ='http://sec.guet.edu.cn/themes/core/static/img/logo.png'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 import mimetypes
 mimetypes.add_type('text/css', '.css')
