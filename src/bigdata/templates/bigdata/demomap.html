@@ -5,6 +5,9 @@
 <html style="height: 100%">
 
 <head>
+    {% load static %}
+    <link REL="SHORTCUT ICON" HREF="{% static 'images/favicon.ico' %}"/>
+
     <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
     <style>
@@ -87,7 +90,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/buy_most_user", success: function (result) {
+            url: "/buy_most_user", async: false, success: function (result) {
                 var data = [];
                 for (var i = 0; i < result.length; i++) {
                     data.push({ user_id: result[i]['用户ID'], number: result[i]['数量'] });
@@ -167,7 +170,7 @@
         
         $(document).ready(function () {
             $.ajax({
-                url: "/productsClassID_statistics", success: function (result) {
+                url: "/productsClassID_statistics", async: false, success: function (result) {
                     
                     var dom = document.getElementById("left1");
                     var myChart = echarts.init(dom);
@@ -312,7 +315,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/cart_most_user", success: function (result) {
+            url: "/cart_most_user", async: false, success: function (result) {
                 var gettedData = [];
 
                 for (var i = 0; i < result.length; i++) {
@@ -440,7 +443,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/fav_most_user", success: function (result) {
+            url: "/fav_most_user", async: false, success: function (result) {
                 var data = [];
 
                 for (var i = 0; i < result.length; i++) {
@@ -531,7 +534,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/productsID_statisctis", success: function (result) {
+            url: "/productsID_statisctis", async: false, success: function (result) {
                 var data = [];
 
                 for (var i = 0; i < result.length; i++) {
@@ -766,7 +769,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/single_user_behavior_statistics", success: function (result) {
+            url: "/single_user_behavior_statistics", async: false, success: function (result) {
 
                 var dom = document.getElementById("bottom");
                 var myChart = echarts.init(dom);
