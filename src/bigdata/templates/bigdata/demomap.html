@@ -95,60 +95,65 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/buy_most_user", async: false, success: function (result) {
+            url: "/cluster", async: false, success: function (result) {
                 var ROOT_PATH =
                 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
 
                 var chartDom = document.getElementById('ml');
                 var myChart = echarts.init(chartDom);
                 var option;
+                var clusterList = []
+                for (var i = 0; i < result['categories'].length; i++) {
+                    clusterList.push(result['categories'][i]['name']);
+                }
+                console.log(clusterList)
                 myChart.showLoading();
                 myChart.showLoading();
-                $.get(ROOT_PATH + '/data/asset/data/webkit-dep.json', function (webkitDep) {
-                    myChart.hideLoading();
-                    option = {
-                        title: {
-                            text: '用户关系可视化',
-                            subtext: '每一个节点表示一个用户，相同颜色结点表示同一类用户',
-                            left: 'center',
-                            textStyle: {
-                                color: '#999',
-                                fontWeight: 'normal',
-                                fontSize: 20
-                            }
-                        },
-                        legend: {
-                            data: ['HTMLElement', 'WebGL', 'SVG', 'CSS', 'Other'],
-                            orient: 'vertical',
-                                right: 10,
-                                show: true
-                        },
-                        series: [
-                        {
-                            type: 'graph',
-                            layout: 'force',
-                            animation: false,
-                            label: {
-                                position: 'right',
-                                formatter: '{b}'
-                            },
-                            draggable: true,
-                            data: webkitDep.nodes.map(function (node, idx) {
-                                node.id = idx;
-                                return node;
-                            }),
-                            categories: webkitDep.categories,
-                            force: {
-                                edgeLength: 5,
-                                repulsion: 20,
-                                gravity: 0.2
-                            },
-                            edges: webkitDep.links
+
+                myChart.hideLoading();
+                option = {
+                    title: {
+                        text: '用户关系可视化（聚类算法）',
+                        subtext: '每一个节点表示一个用户，相同颜色结点表示同一类用户',
+                        left: 'center',
+                        textStyle: {
+                            color: '#999',
+                            fontWeight: 'normal',
+                            fontSize: 20
                         }
-                        ]
-                    };
-                    myChart.setOption(option);
-                });
+                    },
+                    legend: {
+                        data: clusterList,
+                        orient: 'vertical',
+                            right: 10,
+                            show: true
+                    },
+                    series: [
+                    {
+                        type: 'graph',
+                        layout: 'force',
+                        animation: false,
+                        label: {
+                            position: 'right',
+                            formatter: '{b}'
+                        },
+                        draggable: true,
+                        data: result.nodes.map(function (node, idx) {
+                            node.id = idx;
+                            return node;
+                        }),
+                        categories: result.categories,
+                        force: {
+                            edgeLength: 5,
+                            repulsion: 20,
+                            gravity: 0.2
+                        },
+                        edges: result.links
+                    }
+                    ]
+                };
+                myChart.setOption(option);
+
                 option && myChart.setOption(option);
             }
         });

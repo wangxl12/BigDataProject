@@ -163,3 +163,11 @@ def single_user_behavior_statistics(request):
         dbop.close()
     # return HttpResponse(jsonData)
     return JsonResponse(jsonData, json_dumps_params={'ensure_ascii': False}, safe=False)
+
+def cluster(request):
+    import os, json
+    with open(os.path.join(os.getcwd(), 'bigdata/templates/bigdata/cluster.json')) as f:
+        jsonData = json.load(f)
+
+    return JsonResponse(jsonData, json_dumps_params={'ensure_ascii': False}, safe=False)
+        

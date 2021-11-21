@@ -13,6 +13,7 @@ urlpatterns = [
     path('fav_most_user/', views.fav_most_user, name='fav_most_user'),
     path('productsID_statisctis/', views.productsID_statisctis, name='productsID_statisctis'),
     path('productsClassID_statistics/', views.productsClassID_statistics, name='productsClassID_statistics'),
-    path('single_user_behavior_statistics/', views.single_user_behavior_statistics, name='single_user_behavior_statistics')
+    path('single_user_behavior_statistics/', views.single_user_behavior_statistics, name='single_user_behavior_statistics'),
+    path('cluster/', views.cluster, name='cluster'),
     # path('demomap/', views.buy_most_user, name='buy_most_user'),
 ]
