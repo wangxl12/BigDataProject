@@ -5,9 +5,17 @@
 <html style="height: 100%">
 
 <head>
+    {% load static %}
+    <link REL="SHORTCUT ICON" HREF="{% static 'images/favicon.ico' %}">
+
     <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
     <style>
+        #ml {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(190, 255, 222);
+        }
         #top {
             width: 100%;
             height: 100%;
@@ -62,6 +70,7 @@
 </head>
 
 <body style="height: 100%; margin: 0">
+    <div id='ml'></div>
     <div id='top'></div>
     <div id="container">
         <div id='left1'></div>
@@ -76,6 +85,81 @@
     <script type="text/javascript"
         src="https://api.map.baidu.com/api?v=2.0&ak=34rvwCk1WfWqY7sSHDB4litUqaT65b31"></script>
 
+<!-- 机器学习实例-->
+<script type="text/javascript">
+    var dom = document.getElementById("ml");
+    var myChart = echarts.init(dom);
+    var app = {};
+
+    var option;
+    
+    $(document).ready(function () {
+        $.ajax({
+            url: "/cluster", async: false, success: function (result) {
+                var ROOT_PATH =
+                'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+
+                var chartDom = document.getElementById('ml');
+                var myChart = echarts.init(chartDom);
+                var option;
+                var clusterList = []
+                for (var i = 0; i < result['categories'].length; i++) {
+                    clusterList.push(result['categories'][i]['name']);
+                }
+                console.log(clusterList)
+                myChart.showLoading();
+                myChart.showLoading();
+
+                myChart.hideLoading();
+                option = {
+                    title: {
+                        text: '用户关系可视化（聚类算法）',
+                        subtext: '每一个节点表示一个用户，相同颜色结点表示同一类用户',
+                        left: 'center',
+                        textStyle: {
+                            color: '#999',
+                            fontWeight: 'normal',
+                            fontSize: 20
+                        }
+                    },
+                    legend: {
+                        data: clusterList,
+                        orient: 'vertical',
+                            right: 10,
+                            show: true
+                    },
+                    series: [
+                    {
+                        type: 'graph',
+                        layout: 'force',
+                        animation: false,
+                        label: {
+                            position: 'right',
+                            formatter: '{b}'
+                        },
+                        draggable: true,
+                        data: result.nodes.map(function (node, idx) {
+                            node.id = idx;
+                            return node;
+                        }),
+                        categories: result.categories,
+                        force: {
+                            edgeLength: 5,
+                            repulsion: 20,
+                            gravity: 0.2
+                        },
+                        edges: result.links
+                    }
+                    ]
+                };
+                myChart.setOption(option);
+
+                option && myChart.setOption(option);
+            }
+        });
+    });
+
+</script>
 
 <!-- 顶图-->
 <script type="text/javascript">
@@ -87,7 +171,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/buy_most_user", success: function (result) {
+            url: "/buy_most_user", async: false, success: function (result) {
                 var data = [];
                 for (var i = 0; i < result.length; i++) {
                     data.push({ user_id: result[i]['用户ID'], number: result[i]['数量'] });
@@ -167,7 +251,7 @@
         
         $(document).ready(function () {
             $.ajax({
-                url: "/productsClassID_statistics", success: function (result) {
+                url: "/productsClassID_statistics", async: false, success: function (result) {
                     
                     var dom = document.getElementById("left1");
                     var myChart = echarts.init(dom);
@@ -312,7 +396,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/cart_most_user", success: function (result) {
+            url: "/cart_most_user", async: false, success: function (result) {
                 var gettedData = [];
 
                 for (var i = 0; i < result.length; i++) {
@@ -440,7 +524,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/fav_most_user", success: function (result) {
+            url: "/fav_most_user", async: false, success: function (result) {
                 var data = [];
 
                 for (var i = 0; i < result.length; i++) {
@@ -531,7 +615,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/productsID_statisctis", success: function (result) {
+            url: "/productsID_statisctis", async: false, success: function (result) {
                 var data = [];
 
                 for (var i = 0; i < result.length; i++) {
@@ -766,7 +850,7 @@
     
     $(document).ready(function () {
         $.ajax({
-            url: "/single_user_behavior_statistics", success: function (result) {
+            url: "/single_user_behavior_statistics", async: false, success: function (result) {
 
                 var dom = document.getElementById("bottom");
                 var myChart = echarts.init(dom);
