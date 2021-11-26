@@ -53,15 +53,27 @@ https://tianchi.aliyun.com/dataset/dataDetail?dataId=649
 | 用户数量     | 987,994     |
 | 商品类目数量 | 9,439       |
 | 所有行为数量 | 100,150,807 |
+|              |             |
 
 # Requirements
+
+To install the requirements, just input `pip install -r requirements.txt` in the same dir with `requirements.txt`.
 
 ```shell
 pandas
 numpy
 scikit-learn
-pywebio
+django
+matplotlib
 ```
+
+# Start up
+
+Switch to `/BigDataProject/src/`, then run `python manage.py runserver 0.0.0.0:80` , finally you can see the visual results after inputting `127.0.0.1:80` to your browser. Just as below:
+
+<img src="./imgs/Visual_result.png" alt="visual_result" style="zoom:50%;" />
+
+As you can see, we used clustering algorithm to solve machine learning task, you can change the cluster number `n_clusters` in the penultimate cell in `notebook.ipynb`, and rerun the last two cells, not forgetting to run the first cell to import the requirements. Finally, you can see the changes on your browser.
 
 # Code structure description
 
