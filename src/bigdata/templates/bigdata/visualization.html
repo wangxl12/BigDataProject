@@ -1,0 +1,321 @@
+import * as echarts from 'echarts';
+//矩形树图和旭日图的动画过渡
+var ROOT_PATH =
+  'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+
+var chartDom = document.getElementById('main');
+var myChart = echarts.init(chartDom);
+var option;
+
+$.getJSON(
+  ROOT_PATH + '/data/asset/data/echarts-package-size.json',
+  function (data) {
+    const treemapOption = {
+      series: [
+        {
+          type: 'treemap',
+          id: 'echarts-package-size',
+          animationDurationUpdate: 1000,
+          roam: false,
+          nodeClick: undefined,
+          data: data.children,
+          universalTransition: true,
+          label: {
+            show: true
+          },
+          breadcrumb: {
+            show: false
+          }
+        }
+      ]
+    };
+    const sunburstOption = {
+      series: [
+        {
+          type: 'sunburst',
+          id: 'echarts-package-size',
+          radius: ['20%', '90%'],
+          animationDurationUpdate: 1000,
+          nodeClick: undefined,
+          data: data.children,
+          universalTransition: true,
+          itemStyle: {
+            borderWidth: 1,
+            borderColor: 'rgba(255,255,255,.5)'
+          },
+          label: {
+            show: false
+          }
+        }
+      ]
+    };
+    let currentOption = treemapOption;
+    myChart.setOption(currentOption);
+    setInterval(function () {
+      currentOption =
+        currentOption === treemapOption ? sunburstOption : treemapOption;
+      myChart.setOption(currentOption);
+    }, 3000);
+  }
+);
+//回归拟合曲线
+var chartDom = document.getElementById('main');
+var myChart = echarts.init(chartDom);
+var option;
+
+const dataAll = [
+  [
+    [10.0, 8.04],
+    [8.0, 6.95],
+    [13.0, 7.58],
+    [9.0, 8.81],
+    [11.0, 8.33],
+    [14.0, 9.96],
+    [6.0, 7.24],
+    [4.0, 4.26],
+    [12.0, 10.84],
+    [7.0, 4.82],
+    [5.0, 5.68]
+  ],
+  [
+    [10.0, 9.14],
+    [8.0, 8.14],
+    [13.0, 8.74],
+    [9.0, 8.77],
+    [11.0, 9.26],
+    [14.0, 8.1],
+    [6.0, 6.13],
+    [4.0, 3.1],
+    [12.0, 9.13],
+    [7.0, 7.26],
+    [5.0, 4.74]
+  ],
+  [
+    [10.0, 7.46],
+    [8.0, 6.77],
+    [13.0, 12.74],
+    [9.0, 7.11],
+    [11.0, 7.81],
+    [14.0, 8.84],
+    [6.0, 6.08],
+    [4.0, 5.39],
+    [12.0, 8.15],
+    [7.0, 6.42],
+    [5.0, 5.73]
+  ],
+  [
+    [8.0, 6.58],
+    [8.0, 5.76],
+    [8.0, 7.71],
+    [8.0, 8.84],
+    [8.0, 8.47],
+    [8.0, 7.04],
+    [8.0, 5.25],
+    [19.0, 12.5],
+    [8.0, 5.56],
+    [8.0, 7.91],
+    [8.0, 6.89]
+  ]
+];
+const markLineOpt = {
+  animation: false,
+  label: {
+    formatter: 'y = 0.5 * x + 3',
+    align: 'right'
+  },
+  lineStyle: {
+    type: 'solid'
+  },
+  tooltip: {
+    formatter: 'y = 0.5 * x + 3'
+  },
+  data: [
+    [
+      {
+        coord: [0, 3],
+        symbol: 'none'
+      },
+      {
+        coord: [20, 13],
+        symbol: 'none'
+      }
+    ]
+  ]
+};
+option = {
+  title: {
+    text: "Anscombe's quartet",
+    left: 'center',
+    top: 0
+  },
+  grid: [
+    { left: '7%', top: '7%', width: '38%', height: '38%' },
+    { right: '7%', top: '7%', width: '38%', height: '38%' },
+    { left: '7%', bottom: '7%', width: '38%', height: '38%' },
+    { right: '7%', bottom: '7%', width: '38%', height: '38%' }
+  ],
+  tooltip: {
+    formatter: 'Group {a}: ({c})'
+  },
+  xAxis: [
+    { gridIndex: 0, min: 0, max: 20 },
+    { gridIndex: 1, min: 0, max: 20 },
+    { gridIndex: 2, min: 0, max: 20 },
+    { gridIndex: 3, min: 0, max: 20 }
+  ],
+  yAxis: [
+    { gridIndex: 0, min: 0, max: 15 },
+    { gridIndex: 1, min: 0, max: 15 },
+    { gridIndex: 2, min: 0, max: 15 },
+    { gridIndex: 3, min: 0, max: 15 }
+  ],
+  series: [
+    {
+      name: 'I',
+      type: 'scatter',
+      xAxisIndex: 0,
+      yAxisIndex: 0,
+      data: dataAll[0],
+      markLine: markLineOpt
+    },
+    {
+      name: 'II',
+      type: 'scatter',
+      xAxisIndex: 1,
+      yAxisIndex: 1,
+      data: dataAll[1],
+      markLine: markLineOpt
+    },
+    {
+      name: 'III',
+      type: 'scatter',
+      xAxisIndex: 2,
+      yAxisIndex: 2,
+      data: dataAll[2],
+      markLine: markLineOpt
+    },
+    {
+      name: 'IV',
+      type: 'scatter',
+      xAxisIndex: 3,
+      yAxisIndex: 3,
+      data: dataAll[3],
+      markLine: markLineOpt
+    }
+  ]
+};
+var chartDom = document.getElementById('main');
+var myChart = echarts.init(chartDom);
+var option;
+//对点击量，收藏，购买等进行金字塔展示
+option = {
+  title: {
+    text: 'Funnel'
+  },
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b} : {c}%'
+  },
+  toolbox: {
+    feature: {
+      dataView: { readOnly: false },
+      restore: {},
+      saveAsImage: {}
+    }
+  },
+  legend: {
+    data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order']
+  },
+  series: [
+    {
+      name: 'Funnel',
+      type: 'funnel',
+      left: '10%',
+      top: 60,
+      bottom: 60,
+      width: '80%',
+      min: 0,
+      max: 100,
+      minSize: '0%',
+      maxSize: '100%',
+      sort: 'descending',
+      gap: 2,
+      label: {
+        show: true,
+        position: 'inside'
+      },
+      labelLine: {
+        length: 10,
+        lineStyle: {
+          width: 1,
+          type: 'solid'
+        }
+      },
+      itemStyle: {
+        borderColor: '#fff',
+        borderWidth: 1
+      },
+      emphasis: {
+        label: {
+          fontSize: 20
+        }
+      },
+      data: [
+        { value: 60, name: 'Visit' },
+        { value: 40, name: 'Inquiry' },
+        { value: 20, name: 'Order' },
+        { value: 80, name: 'Click' },
+        { value: 100, name: 'Show' }
+      ]
+    }
+  ]
+};
+//树状图
+myChart.showLoading();
+$.get(ROOT_PATH + '/data/asset/data/flare.json', function (data) {
+  myChart.hideLoading();
+  data.children.forEach(function (datum, index) {
+    index % 2 === 0 && (datum.collapsed = true);
+  });
+  myChart.setOption(
+    (option = {
+      tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove'
+      },
+      series: [
+        {
+          type: 'tree',
+          data: [data],
+          top: '1%',
+          left: '7%',
+          bottom: '1%',
+          right: '20%',
+          symbolSize: 7,
+          label: {
+            position: 'left',
+            verticalAlign: 'middle',
+            align: 'right',
+            fontSize: 9
+          },
+          leaves: {
+            label: {
+              position: 'right',
+              verticalAlign: 'middle',
+              align: 'left'
+            }
+          },
+          emphasis: {
+            focus: 'descendant'
+          },
+          expandAndCollapse: true,
+          animationDuration: 550,
+          animationDurationUpdate: 750
+        }
+      ]
+    })
+  );
+});
+
+
+option && myChart.setOption(option);
